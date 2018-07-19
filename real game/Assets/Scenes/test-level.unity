@@ -141,7 +141,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   moveSpd: 7
-  jmp: 9
+  jmp: 7
   bulletSpd: 550
   bullet: {fileID: 1343603245480894, guid: 746e5b3930e3dbd4fb93407781cbdd72, type: 2}
   groundCheck: {fileID: 354267203}
