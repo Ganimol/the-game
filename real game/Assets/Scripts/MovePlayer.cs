@@ -7,9 +7,13 @@ public class MovePlayer : MonoBehaviour {
     //Velocity
     private float vUp;
     private float vHor;
+
     public float moveSpd = 5;
 	public float jmp = 8;
 	public float bulletSpd = 550;
+	public float recoil = 15;
+	public float recoilDrag = 10; 
+
 
     private bool isGrounded = false;
 
@@ -82,6 +86,7 @@ public class MovePlayer : MonoBehaviour {
                 bulletDirection.Normalize();
                 GameObject b = (GameObject)(Instantiate(bullet, transform.position, Quaternion.identity));
                 b.GetComponent<Rigidbody2D>().AddForce(bulletDirection * bulletSpd);
+				rb2d.AddForce (-bulletDirection*recoil); 
 
                 
             }
@@ -131,7 +136,15 @@ public class MovePlayer : MonoBehaviour {
 
     void FixedUpdate () {
 
-        rb2d.velocity = new Vector2(vHor, rb2d.velocity.y + vUp);
-
+		transform.position = transform.position + new Vector3 (vHor, 0, 0); 
+		if (rb2d.velocity.x > 0) {
+			rb2d.velocity = new Vector2 (Mathf.Max (rb2d.velocity.x - recoilDrag, 0), rb2d.velocity.y + vUp);
+		}
+		else if (rb2d.velocity.x < 0) {
+			rb2d.velocity = new Vector2 (Mathf.Min (rb2d.velocity.x + recoilDrag, 0), rb2d.velocity.y + vUp);
+		}
+		else {
+			rb2d.velocity = new Vector2 (0, rb2d.velocity.y + vUp);
+		}
     }
 }
