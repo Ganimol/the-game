@@ -13,7 +13,7 @@ public class MovePlayer : MonoBehaviour {
 	public float bulletSpd = 550;
 	public float recoil = 15;
 	public float recoilDrag = 10; 
-
+	public int coinValue = 1; 
 
     private bool isGrounded = false;
 
@@ -147,4 +147,12 @@ public class MovePlayer : MonoBehaviour {
 			rb2d.velocity = new Vector2 (0, rb2d.velocity.y + vUp);
 		}
     }
+
+	void OnTriggerEnter2D(Collider2D col) {
+		
+		if (col.CompareTag ("Coin")) {
+			Destroy (col.gameObject);
+			Score.Instance.IncreaseScore (coinValue); 
+		}
+	}
 }
